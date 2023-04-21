@@ -17,7 +17,7 @@ function getWeather(city) {
       if (response.ok) {
         return response.json();
       } else {
-        throw new Error("No se pudo obtener el clima");
+        throw new Error("Unable to get the weather :(");
       }
     })
     .then((data) => {
