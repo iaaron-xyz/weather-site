@@ -1,9 +1,15 @@
+function displayLoading() {
+  const weatherInfo = document.getElementById('weather-info');
+  weatherInfo.textContent = 'Waiting results';
+}
+
 function displayResults(data) {
   const weatherInfo = document.getElementById('weather-info');
   const weather = data.weather[0].description;
   const temp = data.main.temp;
   const humidity = data.main.humidity;
   
+  weatherInfo.innerHTML = '';
   weatherInfo.textContent = 'Weather: ' + weather + ', ' + 'Temperature:' + temp + ', ' + 'Humidity: ' + humidity;
 }
 
@@ -29,5 +35,5 @@ function getWeather(city) {
     });
 
   // Show messages while fetching
-  console.log("waiting results");
+  displayLoading();
 }
