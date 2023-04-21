@@ -1,0 +1,19 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>WeatherApp</title>
+    <script src="./weather.js" defer></script>
+  </head>
+
+  <body>
+    <!-- Input form -->
+    <h1>WeatherApp</h1>
+    <form onsubmit="return false;">
+      <label for="city">Ingresa el nombre de la ciudad:</label>
+      <input type="text" id="city" name="city">
+      <button onclick="getWeather(document.getElementById('city').value)">Obtener clima</button>
+    </form>
+    <!-- Show results -->
+    <div id="weather-info"></div>
+  </body>
+</html>
