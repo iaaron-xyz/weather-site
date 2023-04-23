@@ -3,17 +3,19 @@
   <head>
     <title>WeatherApp</title>
     <script src="./weather.js" defer></script>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="stylesheet" href="./style.css">
   </head>
 
   <body>
     <!-- Input form -->
-    <h1>WeatherApp</h1>
-    <form onsubmit="return false;">
+    <h1 id="app-title" class="text-4xl pt-24 pb-8">WeatherApp</h1>
+    <form onsubmit="return false;" class="input-city py-8">
       <label for="city">Enter the city or zip:</label>
-      <input type="text" id="city" name="city">
-      <button onclick="getWeather(document.getElementById('city').value)">Get weather</button>
+      <input type="text" id="city" name="city" class="text-black p-2 mb-4">
+      <button onclick="getWeather(document.getElementById('city').value)" class="border border-sky-500 p-4">Get weather</button>
     </form>
     <!-- Show results -->
-    <div id="weather-info"></div>
+    <div class="text-xl" id="weather-info"></div>
   </body>
 </html>
