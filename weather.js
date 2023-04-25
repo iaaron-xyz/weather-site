@@ -28,12 +28,12 @@ function createMainCard(data) {
 
   const mainInfoCard = document.createElement('div');
   mainInfoCard.setAttribute('id', 'main-info-card');
-  mainInfoCard.setAttribute('class', 'border border-sky-500 flex flex-col p-8 rounded-lg text-center');
-
+  mainInfoCard.setAttribute('class', 'flex flex-col p-8 text-center');
+  
   mainInfoCard.innerHTML = '';
   mainInfoCard.innerHTML = `
     <i class="wi wi-day-cloudy text-8xl my-6"></i>
-    <p class="text-6xl mb-4">${temp}</p>
+    <p class="text-6xl mb-4">${temp.toFixed(1)}&#176;C</p>
     <p class="text-4xl">${city}, ${country}</p>
     <p>${localTimeCity}</p>
   `
