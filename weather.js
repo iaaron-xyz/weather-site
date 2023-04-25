@@ -4,10 +4,10 @@ function displayLoading() {
 }
 
 function displayResults(data) {
-  createMainCard(data);
+  createMainWeatherInfoDiv(data);
 }
 
-function createMainCard(data) {
+function createMainWeatherInfoDiv(data) {
   // Get element
   const weatherInfoDiv = document.getElementById('weather-info');
   weatherInfoDiv.innerHTML = '';
@@ -28,7 +28,7 @@ function createMainCard(data) {
 
   const mainInfoCard = document.createElement('div');
   mainInfoCard.setAttribute('id', 'main-info-card');
-  mainInfoCard.setAttribute('class', 'flex flex-col p-8 text-center');
+  mainInfoCard.setAttribute('class', 'info-card flex flex-col p-8 text-center');
   
   mainInfoCard.innerHTML = '';
   mainInfoCard.innerHTML = `
