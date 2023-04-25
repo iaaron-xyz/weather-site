@@ -19,6 +19,13 @@ function createMainCard(data) {
   const city = data.name;
   const country = data.sys.country;
 
+  const timezoneOffset = data.timezone;
+  const localTime = new Date().getTime();
+  const localOffset = new Date().getTimezoneOffset() * 60000;
+  const utc = localTime + localOffset;
+  const cityTime = utc + (1000 * timezoneOffset);
+  const localTimeCity = new Date(cityTime).toLocaleString();
+
   const mainInfoCard = document.createElement('div');
   mainInfoCard.setAttribute('id', 'main-info-card');
   mainInfoCard.setAttribute('class', 'border border-sky-500 flex flex-col p-8 rounded-lg text-center');
@@ -28,6 +35,7 @@ function createMainCard(data) {
     <i class="wi wi-day-cloudy text-8xl my-6"></i>
     <p class="text-6xl mb-4">${temp}</p>
     <p class="text-4xl">${city}, ${country}</p>
+    <p>${localTimeCity}</p>
   `
 
   weatherInfoDiv.appendChild(mainInfoCard);
@@ -59,4 +67,4 @@ function getWeather(city) {
 }
 
 // Show the weather info of a city at start
-getWeather('Seul');
+getWeather('Guadalajara');
