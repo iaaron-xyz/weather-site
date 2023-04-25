@@ -57,3 +57,6 @@ function getWeather(city) {
   // Show messages while fetching
   displayLoading();
 }
+
+// Show the weather info of a city at start
+getWeather('Seul');
