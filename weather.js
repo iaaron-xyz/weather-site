@@ -1,16 +1,36 @@
 function displayLoading() {
-  const weatherInfo = document.getElementById('weather-info');
-  weatherInfo.textContent = 'Waiting results';
+  const weatherInfoDiv = document.getElementById('weather-info');
+  weatherInfoDiv.textContent = 'Waiting results';
 }
 
 function displayResults(data) {
-  const weatherInfo = document.getElementById('weather-info');
-  const weather = data.weather[0].description;
+  createMainCard(data);
+}
+
+function createMainCard(data) {
+  // Get element
+  const weatherInfoDiv = document.getElementById('weather-info');
+  weatherInfoDiv.innerHTML = '';
+
+  // Get relevant data
+  const weather = data.weather[0].main;
   const temp = data.main.temp;
   const humidity = data.main.humidity;
-  
-  weatherInfo.innerHTML = '';
-  weatherInfo.textContent = 'Weather: ' + weather + ', ' + 'Temperature:' + temp + ', ' + 'Humidity: ' + humidity;
+  const city = data.name;
+  const country = data.sys.country;
+
+  const mainInfoCard = document.createElement('div');
+  mainInfoCard.setAttribute('id', 'main-info-card');
+  mainInfoCard.setAttribute('class', 'border border-sky-500 flex flex-col p-8 rounded-lg text-center');
+
+  mainInfoCard.innerHTML = '';
+  mainInfoCard.innerHTML = `
+    <i class="wi wi-day-cloudy text-8xl my-6"></i>
+    <p class="text-6xl mb-4">${temp}</p>
+    <p class="text-4xl">${city}, ${country}</p>
+  `
+
+  weatherInfoDiv.appendChild(mainInfoCard);
 }
 
 function getWeather(city) {
