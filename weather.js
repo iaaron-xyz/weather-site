@@ -1,16 +1,16 @@
 function displayLoading() {
-  const weatherInfoDiv = document.getElementById('weather-info');
-  weatherInfoDiv.textContent = 'Waiting results';
+  const panelInfoMain = document.getElementById('panel-info-main');
+  panelInfoMain.textContent = 'Waiting results';
 }
 
 function displayResults(data) {
-  createMainWeatherInfoDiv(data);
+  createMainWeatherInfoDivs(data);
 }
 
-function createMainWeatherInfoDiv(data) {
+function createMainWeatherInfoDivs(data) {
   // Get element
-  const weatherInfoDiv = document.getElementById('weather-info');
-  weatherInfoDiv.innerHTML = '';
+  const panelInfoMain = document.getElementById('panel-info-main');
+  panelInfoMain.innerHTML = '';
 
   // Get relevant data
   const weather = data.weather[0].main;
@@ -26,19 +26,17 @@ function createMainWeatherInfoDiv(data) {
   const cityTime = utc + (1000 * timezoneOffset);
   const localTimeCity = new Date(cityTime).toLocaleString();
 
-  const mainInfoCard = document.createElement('div');
-  mainInfoCard.setAttribute('id', 'main-info-card');
-  mainInfoCard.setAttribute('class', 'info-card flex flex-col p-8 text-center');
-  
-  mainInfoCard.innerHTML = '';
-  mainInfoCard.innerHTML = `
+  panelInfoMain.setAttribute('class', 'info-panel flex flex-col p-8 text-center');
+
+  panelInfoMain.innerHTML = '';
+  panelInfoMain.innerHTML = `
     <i class="wi wi-day-cloudy text-8xl my-6"></i>
     <p class="text-6xl mb-4">${temp.toFixed(1)}&#176;C</p>
     <p class="text-4xl">${city}, ${country}</p>
     <p>${localTimeCity}</p>
   `
 
-  weatherInfoDiv.appendChild(mainInfoCard);
+  panelInfoMain.appendChild(panelInfoMain);
 }
 
 function getWeather(city) {

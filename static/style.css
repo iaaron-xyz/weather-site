@@ -21,7 +21,7 @@ body, form {
 }
 
 /* cards */
-.info-card {
+.info-panel {
     /* From https://css.glass */
     background: rgba(255, 255, 255, 0.26);
     border-radius: 16px;
