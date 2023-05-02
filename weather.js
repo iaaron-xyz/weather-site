@@ -49,7 +49,7 @@ function createMainPanel(data, panel) {
   panel.innerHTML = '';
   panel.innerHTML = `
     <p class="text-4xl mb-2">${weather}</p>
-    <i class="${weatherIcon}"></i>
+    <i class="${weatherIcon} text-8xl my-6"></i>
     <p class="text-6xl mb-4">${temp.toFixed(1)}&#176;C</p>
     <p class="text-4xl mb-2">${city}, ${country}</p>
     <p>${localTime}</p>
@@ -91,16 +91,23 @@ function createLeftPanel(data, panel) {
 function createRightPanel(data, panel) {
   panel.classList.add('flex', 'flex-col', 'p-8', 'text-center');
   
-  // Obtiene el clima de los próximos 4 días
+  // Get first 4 weather descriptions
   const futureWeatherDescription = data.list.slice(0, 4).map(item => item.weather[0].description);
-  // const futureTemps = dataforecast.list.slice(0,4)
+  //  Get temperatures
+  const futureWeatherTemp = data.list.slice(0, 4).map(item => item.main.temp);  
   console.log(data);
-  console.log(`El clima de los próximos 4 días en ${city} es: ${futureWeatherDescription.join(', ')}.`);
+  console.log(`Weather nest 4 steps ${city} es: ${futureWeatherDescription.join(', ')}.`);
 
 
   panel.innerHTML = '';
-  panel.innerHTML = `
-    <p class="text-6xl mb-4">Next hours weather: ${futureWeatherDescription.join(', ')}</p>`
+  for (let i = 0; i < 4; i += 1) {
+    panel.innerHTML += `
+      <div>
+        <i class="${getWeatherIcon(futureWeatherDescription[i])} text-6xl my-6"></i>
+        ${futureWeatherTemp[i]}
+        ${futureWeatherDescription[i]}
+      </div>`
+  }
 }
 
 function getWeather(city) {
@@ -151,15 +158,15 @@ function toLocalTimeZone(timezone) {
 
 function getWeatherIcon(weather) {
   if (weather === 'clear sky') {
-    return 'wi wi-day-sunny text-8xl my-6';
+    return 'wi wi-day-sunny';
   }
-  else if (weather === 'few clouds' || weather === 'broken clouds') {
-    return 'wi wi-day-sunny-overcast text-8xl my-6';
+  else if (weather === 'few clouds' || weather === 'broken clouds' || weather === 'scattered clouds') {
+    return 'wi wi-day-sunny-overcast';
   }
   else if (weather === 'overcast clouds') {
-    return 'wi wi-day-cloudy text-8xl my-6';
+    return 'wi wi-day-cloudy';
   }
-  return 'wi wi-solar-eclipse text-8xl my-6';
+  return 'wi wi-solar-eclipse';
 }
 
 function getSunriseAndSunset(data) {
