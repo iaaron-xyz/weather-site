@@ -36,16 +36,20 @@ function createMainPanel(data, panel) {
   const temp = data.main.temp;
   const city = data.name;
   const country = data.sys.country;
+  const weather = data.weather[0].description
   // Transform data timezone to local readable timezone
   const localTime = toLocalTimeZone(data.timezone);
 
   // Add classes
   panel.classList.add('flex', 'flex-col', 'p-8', 'text-center');
 
+  // add weather icon class
+  const weatherIcon = getWeatherIcon(weather);
+
   // Insert the info to the info panel
   panel.innerHTML = '';
   panel.innerHTML = `
-    <i class="wi wi-day-cloudy text-8xl my-6"></i>
+    <i class="${weatherIcon}"></i>
     <p class="text-6xl mb-4">${temp.toFixed(1)}&#176;C</p>
     <p class="text-4xl">${city}, ${country}</p>
     <p>${localTime}</p>
@@ -110,6 +114,19 @@ function toLocalTimeZone(timezone) {
   const utc = localTime + localOffset;
   const cityTime = utc + (1000 * timezoneOffset);
   return new Date(cityTime).toLocaleString();
+}
+
+function getWeatherIcon(weather) {
+  if (weather === 'clear sky') {
+    return 'wi wi-day-sunny text-8xl my-6';
+  }
+  else if (weather === 'few clouds' || weather === 'broken clouds') {
+    return 'wi wi-day-sunny-overcast text-8xl my-6';
+  }
+  else if (weather === 'overcast clouds') {
+    return 'wi wi-day-cloudy text-8xl my-6';
+  }
+  return 'wi wi-solar-eclipse text-8xl my-6';
 }
 
 
