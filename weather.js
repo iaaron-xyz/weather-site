@@ -11,17 +11,21 @@ function displayResults(data) {
   createMainWeatherInfoDivs(data);
 }
 
+function displayForecastResults(data) {
+  const panelInfoRight = document.getElementById('panel-info-right');
+  createRightPanel(data, panelInfoRight);
+}
+
 function createMainWeatherInfoDivs(data) {
   // Get element
   const panelInfoMain = document.getElementById('panel-info-main');
   const panelInfoLeft = document.getElementById('panel-info-left');
-  const panelInfoRight = document.getElementById('panel-info-right');
+  
   panelInfoMain.innerHTML = '';
   panelInfoLeft.innerHTML = '';
 
   createMainPanel(data, panelInfoMain);
   createLeftPanel(data, panelInfoLeft);
-  createRightPanel(data, panelInfoRight);
 }
 
 function createMainPanel(data, panel) {
@@ -87,11 +91,16 @@ function createLeftPanel(data, panel) {
 function createRightPanel(data, panel) {
   panel.classList.add('flex', 'flex-col', 'p-8', 'text-center');
   
-  const humidity = data.main.humidity;
+  // Obtiene el clima de los próximos 4 días
+  const futureWeatherDescription = data.list.slice(0, 4).map(item => item.weather[0].description);
+  // const futureTemps = dataforecast.list.slice(0,4)
+  console.log(data);
+  console.log(`El clima de los próximos 4 días en ${city} es: ${futureWeatherDescription.join(', ')}.`);
+
 
   panel.innerHTML = '';
   panel.innerHTML = `
-    <p class="text-6xl mb-4">Humidity: ${humidity}</p>`
+    <p class="text-6xl mb-4">Next hours weather: ${futureWeatherDescription.join(', ')}</p>`
 }
 
 function getWeather(city) {
@@ -110,6 +119,13 @@ function getWeather(city) {
     .then((data) => {
       console.log(data);
       displayResults(data);
+      // Obtiene la temperatura futura
+      fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
+        .then(response => response.json())
+        .then(dataforecast => {
+          displayForecastResults(dataforecast);
+        })
+        .catch(error => console.error(error));
     })
     .catch((error) => {
       console.log(error);
