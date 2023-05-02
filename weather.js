@@ -19,11 +19,6 @@ function createMainWeatherInfoDivs(data) {
   panelInfoMain.innerHTML = '';
   panelInfoLeft.innerHTML = '';
 
-  // display current window dimensions
-  var width = window.innerWidth;
-  var height = window.innerHeight;
-  console.log(width,', ', height);
-
   createMainPanel(data, panelInfoMain);
   createLeftPanel(data, panelInfoLeft);
   createRightPanel(data, panelInfoRight);
@@ -43,27 +38,49 @@ function createMainPanel(data, panel) {
   // Add classes
   panel.classList.add('flex', 'flex-col', 'p-8', 'text-center');
 
-  // add weather icon class
+  // get weather icon
   const weatherIcon = getWeatherIcon(weather);
 
   // Insert the info to the info panel
   panel.innerHTML = '';
   panel.innerHTML = `
+    <p class="text-4xl mb-2">${weather}</p>
     <i class="${weatherIcon}"></i>
     <p class="text-6xl mb-4">${temp.toFixed(1)}&#176;C</p>
-    <p class="text-4xl">${city}, ${country}</p>
+    <p class="text-4xl mb-2">${city}, ${country}</p>
     <p>${localTime}</p>
   `
 }
 
 function createLeftPanel(data, panel) {
-  panel.classList.add('flex', 'flex-col', 'p-8', 'text-center');
+  panel.classList.add('flex', 'flex-col', 'text-center');
   
   const weather = data.weather[0].description;
 
+  [sunrise, sunset] = getSunriseAndSunset(data);
+
   panel.innerHTML = '';
   panel.innerHTML = `
-  <p class="text-6xl mb-4">${weather}</p>
+  <div class="flex justify-center">
+    <div class="info-panel text-2xl mb-4 p-2 flex flex-col">
+      <div>
+        <i class="wi wi-sunrise text-4xl"></i> Sunrise
+      </div>
+      <div class="text-3xl">
+        ${sunrise}
+      </div>
+    </div>
+    <div class="info-panel text-2xl mb-4 ml-2 p-2 flex flex-col">
+      <div>
+        <i class="wi wi-sunset text-4xl"></i> Sunset
+      </div>
+      <div class="text-3xl">
+        ${sunset}
+      </div>
+    </div>
+  </div>
+
+  
   `
 }
 
@@ -129,6 +146,25 @@ function getWeatherIcon(weather) {
   return 'wi wi-solar-eclipse text-8xl my-6';
 }
 
+function getSunriseAndSunset(data) {
+
+  // Get the user timezone
+  var userTime = new Date();
+  var userTimezoneOffset = userTime.getTimezoneOffset() * 60;
+
+  // Get the current location timezone offset respect to UTC
+  let cityTimezoneOffset = data.timezone;
+
+  // Get the time for sunrise and sunset
+  let sunrise = new Date(data.sys.sunrise * 1000);
+  let sunset = new Date(data.sys.sunset * 1000);
+
+  // substract user offset time and add city offset time
+  sunrise.setSeconds(sunrise.getSeconds() + userTimezoneOffset + cityTimezoneOffset);
+  sunset.setSeconds(sunset.getSeconds() + userTimezoneOffset + cityTimezoneOffset);
+
+  return [sunrise.toLocaleTimeString(), sunset.toLocaleTimeString()];
+}
 
 /**
  * MAIN DOM MANIPULATION
