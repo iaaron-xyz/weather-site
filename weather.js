@@ -136,9 +136,9 @@ function createRightPanel(dataforecast, data, panel) {
   panel.innerHTML = '';
   for (let i = 0; i < numberOfItems; i += 1) {
     panel.innerHTML += `
-      <div class="info-panel flex justify-center mb-2 px-2 pl-4">
+      <div class="info-panel flex justify-around mb-2 px-2 pl-4">
         <div class="mr-4">
-          <i class="${getWeatherIcon(futureWeatherDescription[i])} text-6xl mt-6"></i>
+          <i class="${getWeatherIcon(futureWeatherDescription[i])} text-6xl mt-6 mb-2"></i>
           <div class="mb-2">${futureWeatherDescription[i]}</div>
         </div>
         <div class="flex flex-col justify-center px-4">
@@ -226,7 +226,13 @@ function getWeatherIcon(weather) {
   else if (weather === 'overcast clouds') {
     return 'wi wi-day-cloudy';
   }
-  return 'wi wi-solar-eclipse';
+  else if (weather === 'moderate rain' || weather === 'light rain') {
+    return 'wi wi-showers';
+  }
+  else if (weather === 'heavy intensity rain') {
+    return 'wi wi-rain-wind';
+  }
+  return 'wi wi-alien';
 }
 
 function getSunriseAndSunset(data) {
