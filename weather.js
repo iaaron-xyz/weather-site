@@ -70,7 +70,7 @@ function createLeftPanel(data, panel) {
   <!--Sunrise and sunset -->
     <div>
       <div>
-        <i class="wi wi-sunrise text-4xl mr-1"></i> Sunrise
+        <i class="wi wi-sunrise text-4xl mr-1 text-amber-400"></i> Sunrise
       </div>
       <div class="text-3xl">
         ${sunrise}
@@ -78,7 +78,7 @@ function createLeftPanel(data, panel) {
     </div>
     <div>
       <div>
-        <i class="wi wi-sunset text-4xl mr-1"></i> Sunset
+        <i class="wi wi-sunset text-4xl mr-1 text-orange-700"></i> Sunset
       </div>
       <div class="text-3xl">
         ${sunset}
@@ -87,7 +87,7 @@ function createLeftPanel(data, panel) {
 
     <div>
       <div>
-        <i class="wi wi-humidity text-4xl mr-1"></i> Humidity
+        <i class="wi wi-humidity text-4xl mr-1 text-indigo-600"></i> Humidity
       </div>
       <div class="text-3xl">
         ${data.main.humidity}
@@ -95,7 +95,7 @@ function createLeftPanel(data, panel) {
     </div>
     <div>
       <div>
-        <i class="wi wi-barometer text-4xl mr-1"></i> Pressure
+        <i class="wi wi-barometer text-4xl mr-1 text-slate-300"></i> Pressure
       </div>
       <div class="text-3xl">
         ${data.main.pressure} Pa
@@ -218,19 +218,19 @@ function toLocalTime(timeInSeconds, data) {
 
 function getWeatherIcon(weather) {
   if (weather === 'clear sky') {
-    return 'wi wi-day-sunny';
+    return 'wi wi-day-sunny text-yellow-400';
   }
   else if (weather === 'few clouds' || weather === 'broken clouds' || weather === 'scattered clouds') {
-    return 'wi wi-day-sunny-overcast';
+    return 'wi wi-day-sunny-overcast text-slate-300';
   }
   else if (weather === 'overcast clouds') {
-    return 'wi wi-day-cloudy';
+    return 'wi wi-day-cloudy text-slate-300';
   }
   else if (weather === 'moderate rain' || weather === 'light rain') {
-    return 'wi wi-showers';
+    return 'wi wi-showers text-blue-700';
   }
   else if (weather === 'heavy intensity rain') {
-    return 'wi wi-rain-wind';
+    return 'wi wi-rain-wind text-blue-700';
   }
   return 'wi wi-alien';
 }
