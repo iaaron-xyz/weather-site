@@ -65,26 +65,54 @@ function createLeftPanel(data, panel) {
 
   panel.innerHTML = '';
   panel.innerHTML = `
-  <div class="flex justify-center">
-    <div class="info-panel text-2xl mb-4 p-2 flex flex-col">
+  <div class="grid grid-cols-2 gap-3">
+
+  <!--Sunrise and sunset -->
+    <div>
       <div>
-        <i class="wi wi-sunrise text-4xl"></i> Sunrise
+        <i class="wi wi-sunrise text-4xl mr-1"></i> Sunrise
       </div>
       <div class="text-3xl">
         ${sunrise}
       </div>
     </div>
-    <div class="info-panel text-2xl mb-4 ml-2 p-2 flex flex-col">
+    <div>
       <div>
-        <i class="wi wi-sunset text-4xl"></i> Sunset
+        <i class="wi wi-sunset text-4xl mr-1"></i> Sunset
       </div>
       <div class="text-3xl">
         ${sunset}
       </div>
     </div>
+
+    <div>
+      <div>
+        <i class="wi wi-humidity text-4xl mr-1"></i> Humidity
+      </div>
+      <div class="text-3xl">
+        ${data.main.humidity}
+      </div>
+    </div>
+    <div>
+      <div>
+        <i class="wi wi-barometer text-4xl mr-1"></i> Pressure
+      </div>
+      <div class="text-3xl">
+        ${data.main.pressure} Pa
+      </div>
+    </div>
   </div>
 
-  
+  <div>
+    <div>
+      <i class="wi wi-strong-wind text-4xl mr-1"></i> Windspeed
+    </div>
+    <div class="text-3xl">
+      ${data.wind.speed} m/s
+    </div>
+  </div>
+
+  </div>
   `
 }
 
@@ -100,12 +128,9 @@ function createRightPanel(dataforecast, data, panel) {
   const futureWeatherTemp = dataforecast.list.slice(0, numberOfItems).map(item => item.main.temp);
   //  Get temperatures
   const futureWeatherHour = dataforecast.list.slice(0, numberOfItems).map(item => item.dt);  
-  console.log(dataforecast);
-  console.log(`Weather nest 4 steps ${city} es: ${futureWeatherDescription.join(', ')}.`);
 
   const dateTime = "2023-05-03 00:00:00";
   const time = dateTime.split(" ")[1].split(":")[0];
-  console.log(futureWeatherHour);
 
   // weather info
   panel.innerHTML = '';
