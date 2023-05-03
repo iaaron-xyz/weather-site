@@ -2,10 +2,6 @@
 @import url(./weather-icons.min.css);
 
 
-* {
-    border: 1px solid greenyellow;
-}
-
 body, html {
     height: 100%;
     margin: 0;
