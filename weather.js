@@ -11,9 +11,9 @@ function displayResults(data) {
   createMainWeatherInfoDivs(data);
 }
 
-function displayForecastResults(data) {
+function displayForecastResults(dataforecast, data) {
   const panelInfoRight = document.getElementById('panel-info-right');
-  createRightPanel(data, panelInfoRight);
+  createRightPanel(dataforecast, data, panelInfoRight);
 }
 
 function createMainWeatherInfoDivs(data) {
@@ -88,25 +88,39 @@ function createLeftPanel(data, panel) {
   `
 }
 
-function createRightPanel(data, panel) {
-  panel.classList.add('flex', 'flex-col', 'p-8', 'text-center');
+function createRightPanel(dataforecast, data, panel) {
+  panel.classList.add('flex', 'flex-col', 'text-center');
+
+  // number of elements to 
+  const numberOfItems = 4;
   
   // Get first 4 weather descriptions
-  const futureWeatherDescription = data.list.slice(0, 4).map(item => item.weather[0].description);
+  const futureWeatherDescription = dataforecast.list.slice(0, numberOfItems).map(item => item.weather[0].description);
   //  Get temperatures
-  const futureWeatherTemp = data.list.slice(0, 4).map(item => item.main.temp);  
-  console.log(data);
+  const futureWeatherTemp = dataforecast.list.slice(0, numberOfItems).map(item => item.main.temp);
+  //  Get temperatures
+  const futureWeatherHour = dataforecast.list.slice(0, numberOfItems).map(item => item.dt);  
+  console.log(dataforecast);
   console.log(`Weather nest 4 steps ${city} es: ${futureWeatherDescription.join(', ')}.`);
 
+  const dateTime = "2023-05-03 00:00:00";
+  const time = dateTime.split(" ")[1].split(":")[0];
+  console.log(futureWeatherHour);
 
+  // weather info
   panel.innerHTML = '';
-  for (let i = 0; i < 4; i += 1) {
+  for (let i = 0; i < numberOfItems; i += 1) {
     panel.innerHTML += `
-      <div>
-        <i class="${getWeatherIcon(futureWeatherDescription[i])} text-6xl my-6"></i>
-        ${futureWeatherTemp[i]}
-        ${futureWeatherDescription[i]}
-      </div>`
+      <div class="info-panel flex justify-center mb-2 px-2 pl-4">
+        <div class="mr-4">
+          <i class="${getWeatherIcon(futureWeatherDescription[i])} text-6xl mt-6"></i>
+          <div class="mb-2">${futureWeatherDescription[i]}</div>
+        </div>
+        <div class="flex flex-col justify-center px-4">
+          <div class="text-xl mb-2">${toLocalTime(futureWeatherHour[i], data)}</div>
+          <div class="text-2xl">${futureWeatherTemp[i].toFixed(1)}&#176;C</div>
+        </div>
+        </div>`
   }
 }
 
@@ -130,7 +144,7 @@ function getWeather(city) {
       fetch(`https://api.openweathermap.org/data/2.5/forecast?q=${city}&appid=${apiKey}&units=metric`)
         .then(response => response.json())
         .then(dataforecast => {
-          displayForecastResults(dataforecast);
+          displayForecastResults(dataforecast, data);
         })
         .catch(error => console.error(error));
     })
@@ -154,6 +168,27 @@ function toLocalTimeZone(timezone) {
   const utc = localTime + localOffset;
   const cityTime = utc + (1000 * timezoneOffset);
   return new Date(cityTime).toLocaleString();
+}
+
+function toLocalTime(timeInSeconds, data) {
+
+  // Get the user timezone
+  var userTime = new Date();
+  var userTimezoneOffset = userTime.getTimezoneOffset() * 60;
+
+  // Get the current location timezone offset respect to UTC
+  let cityTimezoneOffset = data.timezone;
+
+  // to readable time
+  let date = new Date(timeInSeconds * 1000);
+
+  // to local time
+  date.setSeconds(date.getSeconds() + userTimezoneOffset + cityTimezoneOffset);
+
+  const dateSplitted = date.toLocaleTimeString().split(':');
+  
+  // Get the hour and minutes
+  return localHour = `${dateSplitted[0]}:${dateSplitted[1]}`;
 }
 
 function getWeatherIcon(weather) {
